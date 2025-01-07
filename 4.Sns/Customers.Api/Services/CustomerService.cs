@@ -12,14 +12,14 @@ public class CustomerService : ICustomerService
 {
     private readonly ICustomerRepository _customerRepository;
     private readonly IGitHubService _gitHubService;
-    private readonly ISqsMessenger _sqsMessenger;
+    private readonly ISnsMessenger _snsMessenger;
 
-    public CustomerService(ICustomerRepository customerRepository, 
-        IGitHubService gitHubService, ISqsMessenger sqsMessenger)
+    public CustomerService(ICustomerRepository customerRepository,
+        IGitHubService gitHubService, ISnsMessenger sqsMessenger)
     {
         _customerRepository = customerRepository;
         _gitHubService = gitHubService;
-        _sqsMessenger = sqsMessenger;
+        _snsMessenger = sqsMessenger;
     }
 
     public async Task<bool> CreateAsync(Customer customer)
@@ -37,12 +37,12 @@ public class CustomerService : ICustomerService
             var message = $"There is no GitHub user with username {customer.GitHubUsername}";
             throw new ValidationException(message, GenerateValidationError(nameof(customer.GitHubUsername), message));
         }
-        
+
         var customerDto = customer.ToCustomerDto();
         var response = await _customerRepository.CreateAsync(customerDto);
         if (response)
         {
-            await _sqsMessenger.SendMessageAsync(customer.ToCustomerCreatedMessage());
+            await _snsMessenger.PublishMessageAsync(customer.ToCustomerCreatedMessage());
         }
 
         return response;
@@ -63,18 +63,18 @@ public class CustomerService : ICustomerService
     public async Task<bool> UpdateAsync(Customer customer)
     {
         var customerDto = customer.ToCustomerDto();
-        
+
         var isValidGitHubUser = await _gitHubService.IsValidGitHubUser(customer.GitHubUsername);
         if (!isValidGitHubUser)
         {
             var message = $"There is no GitHub user with username {customer.GitHubUsername}";
             throw new ValidationException(message, GenerateValidationError(nameof(customer.GitHubUsername), message));
         }
-        
+
         var response = await _customerRepository.UpdateAsync(customerDto);
         if (response)
         {
-            await _sqsMessenger.SendMessageAsync(customer.ToCustomerUpdatedMessage());
+            await _snsMessenger.PublishMessageAsync(customer.ToCustomerUpdatedMessage());
         }
 
         return response;
@@ -85,7 +85,7 @@ public class CustomerService : ICustomerService
         var response = await _customerRepository.DeleteAsync(id);
         if (response)
         {
-            await _sqsMessenger.SendMessageAsync(new CustomerDeleted
+            await _snsMessenger.PublishMessageAsync(new CustomerDeleted
             {
                 Id = id
             });
@@ -96,7 +96,7 @@ public class CustomerService : ICustomerService
 
     private static ValidationFailure[] GenerateValidationError(string paramName, string message)
     {
-        return new []
+        return new[]
         {
             new ValidationFailure(paramName, message)
         };
