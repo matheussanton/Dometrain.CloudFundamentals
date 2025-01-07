@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customers.Api", "3.Sqs\Cust
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customers.Consumer", "3.Sqs\Customers.Consumer\Customers.Consumer.csproj", "{B10FADF6-C9C6-4371-8A6A-7F8641A2E811}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Sns", "4.Sns", "{F0C46761-3BCF-4E07-A476-54F748F27CA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnsPublisher", "4.Sns\SnsPublisher\SnsPublisher.csproj", "{93265644-85DA-435A-91B6-8ABF87AB2627}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,10 @@ Global
 		{B10FADF6-C9C6-4371-8A6A-7F8641A2E811}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B10FADF6-C9C6-4371-8A6A-7F8641A2E811}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B10FADF6-C9C6-4371-8A6A-7F8641A2E811}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93265644-85DA-435A-91B6-8ABF87AB2627}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93265644-85DA-435A-91B6-8ABF87AB2627}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93265644-85DA-435A-91B6-8ABF87AB2627}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93265644-85DA-435A-91B6-8ABF87AB2627}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +52,7 @@ Global
 		{BDE46801-B3F2-40E8-B560-1620D94DDC66} = {8C8E8E0F-1586-4388-9D6C-2B54871EB511}
 		{7DC73E7F-4A01-404A-A91E-326AB6FA15A8} = {8C8E8E0F-1586-4388-9D6C-2B54871EB511}
 		{B10FADF6-C9C6-4371-8A6A-7F8641A2E811} = {8C8E8E0F-1586-4388-9D6C-2B54871EB511}
+		{93265644-85DA-435A-91B6-8ABF87AB2627} = {F0C46761-3BCF-4E07-A476-54F748F27CA9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {780A15ED-6598-4315-BFCD-E2D58E0EFB08}
